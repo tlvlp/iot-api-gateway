@@ -6,11 +6,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class GatewayAPI {
 
     //TODO
+    // internal hook - mqtt message arrival
+    //      handle error
+    //      handle status update
     // get all units by id (UnitS)
     // get unit by id (UnitS)
-    // control unit module (UnitS)
-    // get errors for unit (UnitS)
-    // get tasks for a unit (SchedulerS)
+    // request global status (UnitS)
+    // unit module control (UnitS)
+    // get scheduled tasks for a unit (SchedulerS)
     // add scheduled task to unit (SchedulerS) (UnitS)
     // delete task from unit (SchedulerS) (UnitS)
     // get reports for unit (ReportingS)
