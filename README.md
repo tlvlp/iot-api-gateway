@@ -21,4 +21,22 @@ and is recommended to be run with the docker/dockerTagsPush task.
 Actual API endpoints are inherited from the project's [deployment repository](https://gitlab.com/tlvlp/iot.server.deployment) via environment variables.
 
 
-//TODO - Document endpoints
+### INTERNAL - POST Incoming messages:
+
+1. Receives a message object from the MQTT Client service
+2. Sends the message to Unit service for processing
+3. Takes action based on the result type:
+    - **error**: forwards the UnitLog to the subscribers
+    - **inactive**: forwards the updated Unit to the subscribers
+    - **status**: sends the updated modules to the reporting service and forwards the updated Unit to the subscribers 
+
+
+#### Related environment variables:
+- ${API_GATEWAY_API_INCOMING_MQTT_MESSAGE}
+
+#### Input:
+RequestBody: Message object - the service is agnostic of the contents
+
+#### Output:
+Acknowledgement Http response (202)
+
