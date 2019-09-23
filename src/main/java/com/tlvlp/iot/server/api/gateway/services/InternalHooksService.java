@@ -3,6 +3,8 @@ package com.tlvlp.iot.server.api.gateway.services;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import com.tlvlp.iot.server.api.gateway.config.Properties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,6 +14,7 @@ import java.util.List;
 @Service
 public class InternalHooksService {
 
+    private static final Logger log = LoggerFactory.getLogger(InternalHooksService.class);
     private Properties properties;
     private RestTemplate restTemplate;
 
@@ -23,6 +26,7 @@ public class InternalHooksService {
     public void handleIncomingMQTTMessage(Object message) {
         DocumentContext processedMessage = JsonPath.parse(forwardMessageToUnitService(message));
         var messageType = processedMessage.read("$.type", String.class);
+        log.info(String.format("Handling incoming MQTT message of type: %s", messageType));
         switch (messageType) {
             case "error":
             case "inactive":
@@ -35,7 +39,6 @@ public class InternalHooksService {
                 notifySubscribers(processedMessage.read("$.object"));
                 break;
         }
-
     }
 
     private String forwardMessageToUnitService(Object message) {
