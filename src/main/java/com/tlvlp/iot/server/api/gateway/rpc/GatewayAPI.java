@@ -2,7 +2,7 @@ package com.tlvlp.iot.server.api.gateway.rpc;
 
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/api")
+@RestController()
 public class GatewayAPI {
 
     //TODO
