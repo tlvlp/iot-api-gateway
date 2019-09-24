@@ -65,8 +65,8 @@ public class Properties {
     @Value("${SCHEDULER_SERVICE_API_POST_EVENT}")
     private String SCHEDULER_SERVICE_API_POST_EVENT;
 
-    @Value("${SCHEDULER_SERVICE_API_DELETE_EVENT_BY_ID}")
-    private String SCHEDULER_SERVICE_API_DELETE_EVENT_BY_ID;
+    @Value("${SCHEDULER_SERVICE_API_DELETE_EVENT}")
+    private String SCHEDULER_SERVICE_API_DELETE_EVENT;
 
     // Reporting
 
@@ -153,8 +153,8 @@ public class Properties {
         return SCHEDULER_SERVICE_API_POST_EVENT;
     }
 
-    public String getSCHEDULER_SERVICE_API_DELETE_EVENT_BY_ID() {
-        return SCHEDULER_SERVICE_API_DELETE_EVENT_BY_ID;
+    public String getSCHEDULER_SERVICE_API_DELETE_EVENT() {
+        return SCHEDULER_SERVICE_API_DELETE_EVENT;
     }
 
     public String getREPORTING_SERVICE_NAME() {

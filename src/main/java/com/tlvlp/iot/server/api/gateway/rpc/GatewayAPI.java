@@ -11,7 +11,6 @@ import java.util.Map;
 public class GatewayAPI {
 
     //TODO
-    // add scheduled task to unit (SchedulerS) (UnitS)
     // delete task from unit (SchedulerS) (UnitS)
     // get all scheduled tasks for a unit (list of tasks)
     // get reports for unit (ReportingS)
@@ -45,6 +44,11 @@ public class GatewayAPI {
     @PostMapping("${API_GATEWAY_API_ADD_SCHEDULED_EVENT_TO_UNIT}")
     public ResponseEntity addScheduledEventToUnit(@RequestBody Map<String, Object> scheduledEventDetails) {
         return gatewayService.addScheduledEventToUnit(scheduledEventDetails);
+    }
+
+    @PostMapping("${API_GATEWAY_API_DELETE_SCHEDULED_EVENT_FROM_UNIT}")
+    public ResponseEntity deleteScheduledEventFromUnit(@RequestBody Map<String, Object> scheduledEventDetails) {
+        return gatewayService.deleteScheduledEventFromUnit(scheduledEventDetails);
     }
 
 }

@@ -117,9 +117,35 @@ Acknowledgement: Http response (202)
 
 ### POST Add Scheduled Event to Unit:
 
-1. Posts the received event details to the Scheduler Service
+1. Posts the received event details to the Scheduler Service for creation/update
 2. Receives an eventID for the created/updated event
-3. Calls the Unit service to add the eventID to the list of events for the given Unit
+3. Calls the Unit service to add the eventID to the given unit's list of events
+
+#### Related environment variables:
+- ${API_GATEWAY_API_ADD_SCHEDULED_EVENT_TO_UNIT}
+
+#### Input:
+RequestBody:
+- **unitID**: String - ID of the containing Unit
+- **event**: ScheduledEvent details
+
+```
+{
+    "unitID": "tlvlp.iot.BazsalikON-soil"
+    "event": {...}
+}
+
+```
+#### Output:
+The updated Unit
+
+
+
+### POST Delete Scheduled Event from Unit:
+
+1. Posts the received event details to the Scheduler Service for deletion
+2. Receives an eventID for the deleted event
+3. Calls the Unit service to remove the eventID from the given unit's list of events
 
 #### Related environment variables:
 - ${API_GATEWAY_API_ADD_SCHEDULED_EVENT_TO_UNIT}
@@ -139,4 +165,5 @@ RequestBody:
 
 #### Output:
 The updated Unit
+
 

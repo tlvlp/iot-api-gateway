@@ -93,4 +93,24 @@ public class GatewayService {
                         "eventID", eventID),
                 String.class);
     }
+
+    public ResponseEntity deleteScheduledEventFromUnit(Map<String, Object> scheduledEventDetails) {
+        var unitID = scheduledEventDetails.get("unitID");
+        var scheduledEvent = scheduledEventDetails.get("event");
+        String eventID = restTemplate.postForObject(
+                String.format("http://%s:%s%s",
+                        properties.getSCHEDULER_SERVICE_NAME(),
+                        properties.getSCHEDULER_SERVICE_PORT(),
+                        properties.getSCHEDULER_SERVICE_API_DELETE_EVENT()),
+                scheduledEvent,
+                String.class);
+        return restTemplate.postForEntity(
+                String.format("http://%s:%s%s",
+                        properties.getUNIT_SERVICE_NAME(),
+                        properties.getUNIT_SERVICE_PORT(),
+                        properties.getUNIT_SERVICE_API_DELETE_SCHEDULED_EVENT()),
+                Map.of("unitID", unitID,
+                        "eventID", eventID),
+                String.class);
+    }
 }
