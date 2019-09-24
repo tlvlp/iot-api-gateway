@@ -3,6 +3,7 @@ package com.tlvlp.iot.server.api.gateway.rpc;
 import com.tlvlp.iot.server.api.gateway.services.GatewayService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,5 +36,9 @@ public class GatewayAPI {
         return gatewayService.getUnitById(unitID);
     }
 
+    @PostMapping("${API_GATEWAY_API_REQUEST_GLOBAL_UNIT_STATUS}")
+    public ResponseEntity requestGlobalStatus() {
+        return gatewayService.requestGlobalStatus();
+    }
 
 }

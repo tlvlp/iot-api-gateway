@@ -68,3 +68,18 @@ RequestParam
 #### Output:
 A Unit object or 404 Not Found
 
+
+### POST Request Global Unit Status:
+
+1. Gets a global status request message from the Unit service
+2. Sends the message to the the units via the MQTT Client serice
+3. All active units should respond with their status update (processed separately)
+
+#### Related environment variables:
+- ${API_GATEWAY_API_REQUEST_GLOBAL_UNIT_STATUS}
+
+#### Input:
+Takes no input
+
+#### Output:
+Acknowledgement: Http response (202)

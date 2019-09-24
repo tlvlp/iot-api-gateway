@@ -39,4 +39,20 @@ public class GatewayService {
                         unitID),
                 String.class);
     }
+
+    public ResponseEntity requestGlobalStatus() {
+        Object statusRequestMessage = restTemplate.getForEntity(
+                String.format("http://%s:%s%s",
+                        properties.getUNIT_SERVICE_NAME(),
+                        properties.getUNIT_SERVICE_PORT(),
+                        properties.getUNIT_SERVICE_API_REQUEST_GLOBAL_STATUS()),
+                String.class);
+        return restTemplate.postForEntity(
+                String.format("http://%s:%s%s",
+                        properties.getMQTT_CLIENT_SERVICE_NAME(),
+                        properties.getMQTT_CLIENT_SERVICE_PORT(),
+                        properties.getMQTT_CLIENT_API_OUTGOING_MESSAGE()),
+                statusRequestMessage,
+                String.class);
+    }
 }
