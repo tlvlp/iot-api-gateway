@@ -131,7 +131,7 @@ RequestBody:
 
 ```
 {
-    "unitID": "tlvlp.iot.BazsalikON-soil"
+    "unitID": "tlvlp.iot.BazsalikON-soil",
     "event": {...}
 }
 
@@ -148,7 +148,7 @@ The updated Unit
 3. Calls the Unit service to remove the eventID from the given unit's list of events
 
 #### Related environment variables:
-- ${API_GATEWAY_API_ADD_SCHEDULED_EVENT_TO_UNIT}
+- ${API_GATEWAY_API_DELETE_SCHEDULED_EVENT_FROM_UNIT}
 
 #### Input:
 RequestBody:
@@ -157,7 +157,7 @@ RequestBody:
 
 ```
 {
-    "unitID": "tlvlp.iot.BazsalikON-soil"
+    "unitID": "tlvlp.iot.BazsalikON-soil",
     "event": {...}
 }
 
@@ -167,3 +167,34 @@ RequestBody:
 The updated Unit
 
 
+
+### GET Unit by ID with Scheduled Events and Logs:
+
+1. Retrieves a Unit by ID from the Unit service and adds it to a Map under "unit"
+2. Retrieves the UnitLogs from the Unit service for that unit to a given time frame and adds them to a Map under "logs"
+3. Retrieves the units Scheduled Events from the Scheduler service and adds them to a Map under "events"
+4. Return the map
+
+#### Related environment variables:
+- ${API_GATEWAY_API_GET_UNIT_BY_ID_WITH_SCHEDULES_AND_LOGS}
+
+#### Input:
+RequestParams:
+- **unitID**: String - ID of the containing Unit
+- **timeFrom**: LocalDateTime - Lower time limit for the report (included)
+- **timeTo**: LocalDateTime - Upper time limit for the report (excluded)
+
+#### Output:
+Returns a map:
+- **unit**: Object Unit
+- **events**: List of Scheduled Events
+- **logs**: List of UnitLogs
+
+```
+{
+    "unit": {...},
+    "events": [ {...}, {...} ],
+    "logs": [ {...}, {...} ]
+}
+
+```

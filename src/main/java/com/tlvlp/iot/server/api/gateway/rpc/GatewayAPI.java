@@ -1,9 +1,12 @@
 package com.tlvlp.iot.server.api.gateway.rpc;
 
 import com.tlvlp.iot.server.api.gateway.services.GatewayService;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +14,6 @@ import java.util.Map;
 public class GatewayAPI {
 
     //TODO
-    // delete task from unit (SchedulerS) (UnitS)
     // get all scheduled tasks for a unit (list of tasks)
     // get reports for unit (ReportingS)
 
@@ -27,8 +29,20 @@ public class GatewayAPI {
     }
 
     @GetMapping("${API_GATEWAY_API_GET_UNIT_BY_ID}")
-    public ResponseEntity getUnitById(@RequestParam String unitID) {
-        return gatewayService.getUnitById(unitID);
+    public ResponseEntity<Object> getUnitById(@RequestParam String unitID) {
+        return new ResponseEntity<>(gatewayService.getUnitById(unitID), HttpStatus.OK);
+    }
+
+    @GetMapping("${API_GATEWAY_API_GET_UNIT_BY_ID_WITH_SCHEDULES_AND_LOGS}")
+    public ResponseEntity<Map<String, Object>> getUnitByIdWithSchedulesAndReports(
+            @RequestParam String unitID,
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeFrom,
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeTo) {
+        return new ResponseEntity<>(
+                gatewayService.getUnitByIdWithSchedulesAndReports(unitID, timeFrom, timeTo),
+                HttpStatus.OK);
     }
 
     @PostMapping("${API_GATEWAY_API_REQUEST_GLOBAL_UNIT_STATUS}")

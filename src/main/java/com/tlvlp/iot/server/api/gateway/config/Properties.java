@@ -59,14 +59,15 @@ public class Properties {
     @Value("${SCHEDULER_SERVICE_PORT}")
     private String SCHEDULER_SERVICE_PORT;
 
-    @Value("${SCHEDULER_SERVICE_API_LIST_EVENTS_BY_EXAMPLE}")
-    private String SCHEDULER_SERVICE_API_LIST_EVENTS_BY_EXAMPLE;
+    @Value("${SCHEDULER_SERVICE_API_GET_EVENTS_FROM_LIST}")
+    private String SCHEDULER_SERVICE_API_GET_EVENTS_FROM_LIST;
 
     @Value("${SCHEDULER_SERVICE_API_POST_EVENT}")
     private String SCHEDULER_SERVICE_API_POST_EVENT;
 
     @Value("${SCHEDULER_SERVICE_API_DELETE_EVENT}")
     private String SCHEDULER_SERVICE_API_DELETE_EVENT;
+
 
     // Reporting
 
@@ -145,8 +146,8 @@ public class Properties {
         return SCHEDULER_SERVICE_PORT;
     }
 
-    public String getSCHEDULER_SERVICE_API_LIST_EVENTS_BY_EXAMPLE() {
-        return SCHEDULER_SERVICE_API_LIST_EVENTS_BY_EXAMPLE;
+    public String getSCHEDULER_SERVICE_API_GET_EVENTS_FROM_LIST() {
+        return SCHEDULER_SERVICE_API_GET_EVENTS_FROM_LIST;
     }
 
     public String getSCHEDULER_SERVICE_API_POST_EVENT() {
@@ -172,4 +173,5 @@ public class Properties {
     public String getREPORTING_SERVICE_API_POST_VALUES() {
         return REPORTING_SERVICE_API_POST_VALUES;
     }
+
 }

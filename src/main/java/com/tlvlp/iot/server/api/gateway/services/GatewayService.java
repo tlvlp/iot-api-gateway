@@ -1,5 +1,6 @@
 package com.tlvlp.iot.server.api.gateway.services;
 
+import com.jayway.jsonpath.JsonPath;
 import com.tlvlp.iot.server.api.gateway.config.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -31,14 +33,46 @@ public class GatewayService {
                 List.class);
     }
 
-    public ResponseEntity getUnitById(String unitID) {
-        return restTemplate.getForEntity(
+    public Object getUnitById(String unitID) {
+        return restTemplate.getForObject(
                 String.format("http://%s:%s%s?unitID=%s",
                         properties.getUNIT_SERVICE_NAME(),
                         properties.getUNIT_SERVICE_PORT(),
                         properties.getUNIT_SERVICE_API_GET_UNIT_BY_ID(),
                         unitID),
                 String.class);
+    }
+
+    public Map<String, Object> getUnitByIdWithSchedulesAndReports(
+            String unitID, LocalDateTime timeFrom, LocalDateTime timeTo) {
+        var unit = getUnitById(unitID);
+        var eventIDList = JsonPath.parse(unit).read("$.scheduledEvents", List.class);
+        return Map.of(
+                "unit", unit,
+                "events", getScheduledEventsFromIDs(eventIDList),
+                "logs", getUnitLogs(unitID, timeFrom, timeTo));
+    }
+
+    private List getScheduledEventsFromIDs(List scheduledEventIDList) {
+        return restTemplate.postForObject(
+                String.format("http://%s:%s%s",
+                        properties.getSCHEDULER_SERVICE_NAME(),
+                        properties.getSCHEDULER_SERVICE_PORT(),
+                        properties.getSCHEDULER_SERVICE_API_GET_EVENTS_FROM_LIST()),
+                scheduledEventIDList,
+                List.class);
+    }
+
+    private List getUnitLogs(String unitID, LocalDateTime timeFrom, LocalDateTime timeTo) {
+        return restTemplate.getForObject(
+                String.format("http://%s:%s%s?unitID=%s&timeFrom=%s&timeTo=%s",
+                        properties.getUNIT_SERVICE_NAME(),
+                        properties.getUNIT_SERVICE_PORT(),
+                        properties.getUNIT_SERVICE_API_GET_UNIT_LOGS(),
+                        unitID,
+                        timeFrom,
+                        timeTo),
+                List.class);
     }
 
     public ResponseEntity requestGlobalStatus() {
