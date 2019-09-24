@@ -7,15 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 public class GatewayAPI {
-
-    //TODO
-    // get all scheduled tasks for a unit (list of tasks)
-    // get reports for unit (ReportingS)
 
     private GatewayService gatewayService;
 
@@ -63,6 +61,18 @@ public class GatewayAPI {
     @PostMapping("${API_GATEWAY_API_DELETE_SCHEDULED_EVENT_FROM_UNIT}")
     public ResponseEntity deleteScheduledEventFromUnit(@RequestBody Map<String, Object> scheduledEventDetails) {
         return gatewayService.deleteScheduledEventFromUnit(scheduledEventDetails);
+    }
+
+    @GetMapping("${API_GATEWAY_API_GET_REPORTS_FOR_UNIT_MODULE}")
+    public ResponseEntity getReportsForUnit(
+            @RequestParam String unitID,
+            @RequestParam String moduleID,
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeFrom,
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeTo,
+            @RequestParam Set<ChronoUnit> requestedScopes) {
+        return gatewayService.getReportsForUnit(unitID, moduleID, timeFrom, timeTo, requestedScopes);
     }
 
 }

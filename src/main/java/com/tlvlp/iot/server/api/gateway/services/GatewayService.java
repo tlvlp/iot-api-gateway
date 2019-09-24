@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class GatewayService {
@@ -146,5 +148,22 @@ public class GatewayService {
                 Map.of("unitID", unitID,
                         "eventID", eventID),
                 String.class);
+    }
+
+    public ResponseEntity getReportsForUnit(
+            String unitID, String moduleID, LocalDateTime timeFrom, LocalDateTime timeTo,
+            Set<ChronoUnit> requestedScopes) {
+        return restTemplate.getForEntity(
+                String.format("http://%s:%s%s?unitID=%s&moduleID=%s&timeFrom=%s&timeTo=%s&requestedScopes=%s",
+                        properties.getREPORTING_SERVICE_NAME(),
+                        properties.getREPORTING_SERVICE_PORT(),
+                        properties.getREPORTING_SERVICE_API_GET_AVERAGES(),
+                        unitID,
+                        moduleID,
+                        timeFrom,
+                        timeTo,
+                        requestedScopes),
+                String.class
+        );
     }
 }

@@ -198,3 +198,42 @@ Returns a map:
 }
 
 ```
+
+### GET Average Value Reports for Unit:
+
+Returns averages within the requested time frame for the requested scopes from the Reporting service.
+
+#### Related environment variables:
+- ${API_GATEWAY_API_GET_REPORTS_FOR_UNIT_MODULE}
+
+#### Input:
+RequestParams:
+- **unitID**: String - ID of the containing Unit
+- **moduleID**: String - module ID
+- **timeFrom**: LocalDateTime - The start date and time of the requested report interval (inclusive)
+- **timeTo**: LocalDateTime - The end date and time of the requested report interval (exclusive)
+- **requestedScopes**: Set of ChronoUnits - A list of requested scopes to be included in the report:
+    - **MINUTES**: All the raw values from the module within the given interval 
+    - **HOURS**: Hourly averages from the module within the given interval 
+    - **DAYS**: Daily averages from the module within the given interval 
+    - **MONTHS**: Monthly averages from the module within the given interval
+    - **YEARS**: Yearly averages from the module within the given interval 
+    
+#### Output:
+A map where each key is a ChronoUnit denoting the scope which the values belong to
+and each value is a TreeMap ordered by date containing periods(scope specific!) and related averages in a Dobule format
+
+```
+{
+    [
+        "MONTHS": [
+                        {"2019-04", 14.0}, 
+                        {"2019-05", 14.2}
+                  ]
+        "YEARS": [
+                        {"2019", 14.1}, 
+                        {"2020", 10.0}
+                 ]
+    ]
+}
+```
