@@ -21,12 +21,22 @@ public class GatewayService {
         this.properties = properties;
     }
 
-    public ResponseEntity getAllUnits() {
+    public ResponseEntity<List> getAllUnits() {
         return restTemplate.getForEntity(
                 String.format("http://%s:%s%s",
                         properties.getUNIT_SERVICE_NAME(),
                         properties.getUNIT_SERVICE_PORT(),
                         properties.getUNIT_SERVICE_API_LIST_ALL_UNIT()),
                 List.class);
+    }
+
+    public ResponseEntity getUnitById(String unitID) {
+        return restTemplate.getForEntity(
+                String.format("http://%s:%s%s?unitID=%s",
+                        properties.getUNIT_SERVICE_NAME(),
+                        properties.getUNIT_SERVICE_PORT(),
+                        properties.getAPI_GATEWAY_API_GET_UNIT_BY_ID(),
+                        unitID),
+                String.class);
     }
 }

@@ -3,14 +3,15 @@ package com.tlvlp.iot.server.api.gateway.rpc;
 import com.tlvlp.iot.server.api.gateway.services.GatewayService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class GatewayAPI {
 
     //TODO
-    // get all units by id (UnitS)
-    // get unit by id (UnitS)
     // request global status (UnitS)
     // unit module control (UnitS)
     // get scheduled tasks for a unit (SchedulerS)
@@ -25,8 +26,13 @@ public class GatewayAPI {
     }
 
     @GetMapping("${API_GATEWAY_API_GET_ALL_UNITS}")
-    public ResponseEntity getAllUnits() {
+    public ResponseEntity<List> getAllUnits() {
         return gatewayService.getAllUnits();
+    }
+
+    @GetMapping("${API_GATEWAY_API_GET_UNIT_BY_ID}")
+    public ResponseEntity getUnitById(@RequestParam String unitID) {
+        return gatewayService.getUnitById(unitID);
     }
 
 
