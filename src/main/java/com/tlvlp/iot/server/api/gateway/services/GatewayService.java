@@ -55,4 +55,21 @@ public class GatewayService {
                 statusRequestMessage,
                 String.class);
     }
+
+    public ResponseEntity controlUnitModule(Object updatedModule) {
+        Object moduleControlMessage = restTemplate.postForEntity(
+                String.format("http://%s:%s%s",
+                        properties.getUNIT_SERVICE_NAME(),
+                        properties.getUNIT_SERVICE_PORT(),
+                        properties.getUNIT_SERVICE_API_MODULE_CONTROL()),
+                updatedModule,
+                String.class);
+        return restTemplate.postForEntity(
+                String.format("http://%s:%s%s",
+                        properties.getMQTT_CLIENT_SERVICE_NAME(),
+                        properties.getMQTT_CLIENT_SERVICE_PORT(),
+                        properties.getMQTT_CLIENT_API_OUTGOING_MESSAGE()),
+                moduleControlMessage,
+                String.class);
+    }
 }

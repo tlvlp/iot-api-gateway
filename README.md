@@ -72,7 +72,7 @@ A Unit object or 404 Not Found
 ### POST Request Global Unit Status:
 
 1. Gets a global status request message from the Unit service
-2. Sends the message to the the units via the MQTT Client serice
+2. Sends the message to the the units via the MQTT Client service
 3. All active units should respond with their status update (processed separately)
 
 #### Related environment variables:
@@ -80,6 +80,35 @@ A Unit object or 404 Not Found
 
 #### Input:
 Takes no input
+
+#### Output:
+Acknowledgement: Http response (202)
+
+
+### POST Control Unit Module:
+
+1. Sends a module object to the Unit Service
+2. Gets a Unit and Module specific control message from the Unit service
+3. Sends the message to the the unit via the MQTT Client service
+4. The unit should respond by performing the requested change and sending a status update (processed separately)
+
+#### Related environment variables:
+- ${API_GATEWAY_API_UNIT_MODULE_CONTROL}
+
+#### Input:
+RequestBody:
+- **moduleID**: String - module ID
+- **value**: Double - requested value/state of the Module
+- **unitID**: String - ID of the containing Unit
+
+```
+{
+    "moduleID": "relay|growlight",
+    "value": 1,
+    "unitID": "tlvlp.iot.BazsalikON-soil"
+}
+
+```
 
 #### Output:
 Acknowledgement: Http response (202)

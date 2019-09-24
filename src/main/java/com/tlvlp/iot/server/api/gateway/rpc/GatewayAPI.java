@@ -2,10 +2,7 @@ package com.tlvlp.iot.server.api.gateway.rpc;
 
 import com.tlvlp.iot.server.api.gateway.services.GatewayService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,7 +10,6 @@ import java.util.List;
 public class GatewayAPI {
 
     //TODO
-    // request global status (UnitS)
     // unit module control (UnitS)
     // get scheduled tasks for a unit (SchedulerS)
     // add scheduled task to unit (SchedulerS) (UnitS)
@@ -39,6 +35,11 @@ public class GatewayAPI {
     @PostMapping("${API_GATEWAY_API_REQUEST_GLOBAL_UNIT_STATUS}")
     public ResponseEntity requestGlobalStatus() {
         return gatewayService.requestGlobalStatus();
+    }
+
+    @PostMapping("${API_GATEWAY_API_UNIT_MODULE_CONTROL}")
+    public ResponseEntity controlUnitModule(@RequestBody Object updatedModule) {
+        return gatewayService.controlUnitModule(updatedModule);
     }
 
 }
