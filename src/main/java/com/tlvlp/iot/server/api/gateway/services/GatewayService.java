@@ -1,6 +1,7 @@
 package com.tlvlp.iot.server.api.gateway.services;
 
 import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.PathNotFoundException;
 import com.tlvlp.iot.server.api.gateway.config.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,20 +36,25 @@ public class GatewayService {
                 List.class);
     }
 
-    public Object getUnitById(String unitID) {
+    public Map getUnitById(String unitID) {
         return restTemplate.getForObject(
                 String.format("http://%s:%s%s?unitID=%s",
                         properties.getUNIT_SERVICE_NAME(),
                         properties.getUNIT_SERVICE_PORT(),
                         properties.getUNIT_SERVICE_API_GET_UNIT_BY_ID(),
                         unitID),
-                String.class);
+                Map.class);
     }
 
     public Map<String, Object> getUnitByIdWithSchedulesAndReports(
             String unitID, LocalDateTime timeFrom, LocalDateTime timeTo) {
-        var unit = getUnitById(unitID);
-        var eventIDList = JsonPath.parse(unit).read("$.scheduledEvents", List.class);
+        Map unit = getUnitById(unitID);
+        List eventIDList;
+        try {
+            eventIDList = JsonPath.parse(unit).read("$.scheduledEvents", List.class);
+        } catch (PathNotFoundException e) {
+            eventIDList = List.of();
+        }
         return Map.of(
                 "unit", unit,
                 "events", getScheduledEventsFromIDs(eventIDList),
