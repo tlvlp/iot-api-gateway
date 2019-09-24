@@ -112,3 +112,31 @@ RequestBody:
 
 #### Output:
 Acknowledgement: Http response (202)
+
+
+
+### POST Add Scheduled Event to Unit:
+
+1. Posts the received event details to the Scheduler Service
+2. Receives an eventID for the created/updated event
+3. Calls the Unit service to add the eventID to the list of events for the given Unit
+
+#### Related environment variables:
+- ${API_GATEWAY_API_ADD_SCHEDULED_EVENT_TO_UNIT}
+
+#### Input:
+RequestBody:
+- **unitID**: String - ID of the containing Unit
+- **event**: ScheduledEvent details
+
+```
+{
+    "unitID": "tlvlp.iot.BazsalikON-soil"
+    "event": {...}
+}
+
+```
+
+#### Output:
+The updated Unit
+

@@ -5,15 +5,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class GatewayAPI {
 
     //TODO
-    // unit module control (UnitS)
-    // get scheduled tasks for a unit (SchedulerS)
     // add scheduled task to unit (SchedulerS) (UnitS)
     // delete task from unit (SchedulerS) (UnitS)
+    // get all scheduled tasks for a unit (list of tasks)
     // get reports for unit (ReportingS)
 
     private GatewayService gatewayService;
@@ -40,6 +40,11 @@ public class GatewayAPI {
     @PostMapping("${API_GATEWAY_API_UNIT_MODULE_CONTROL}")
     public ResponseEntity controlUnitModule(@RequestBody Object updatedModule) {
         return gatewayService.controlUnitModule(updatedModule);
+    }
+
+    @PostMapping("${API_GATEWAY_API_ADD_SCHEDULED_EVENT_TO_UNIT}")
+    public ResponseEntity addScheduledEventToUnit(@RequestBody Map<String, Object> scheduledEventDetails) {
+        return gatewayService.addScheduledEventToUnit(scheduledEventDetails);
     }
 
 }
