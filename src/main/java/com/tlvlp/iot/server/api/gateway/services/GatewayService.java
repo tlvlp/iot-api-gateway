@@ -35,7 +35,7 @@ public class GatewayService {
                 String.format("http://%s:%s%s?unitID=%s",
                         properties.getUNIT_SERVICE_NAME(),
                         properties.getUNIT_SERVICE_PORT(),
-                        properties.getAPI_GATEWAY_API_GET_UNIT_BY_ID(),
+                        properties.getUNIT_SERVICE_API_GET_UNIT_BY_ID(),
                         unitID),
                 String.class);
     }

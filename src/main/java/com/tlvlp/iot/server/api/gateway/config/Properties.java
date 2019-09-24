@@ -30,8 +30,8 @@ public class Properties {
     @Value("${UNIT_SERVICE_API_LIST_ALL_UNIT}")
     private String UNIT_SERVICE_API_LIST_ALL_UNIT;
 
-    @Value("${API_GATEWAY_API_GET_UNIT_BY_ID}")
-    private String API_GATEWAY_API_GET_UNIT_BY_ID;
+    @Value("${UNIT_SERVICE_API_GET_UNIT_BY_ID}")
+    private String UNIT_SERVICE_API_GET_UNIT_BY_ID;
 
     @Value("${UNIT_SERVICE_API_REQUEST_GLOBAL_STATUS}")
     private String UNIT_SERVICE_API_REQUEST_GLOBAL_STATUS;
@@ -109,8 +109,8 @@ public class Properties {
         return UNIT_SERVICE_API_LIST_ALL_UNIT;
     }
 
-    public String getAPI_GATEWAY_API_GET_UNIT_BY_ID() {
-        return API_GATEWAY_API_GET_UNIT_BY_ID;
+    public String getUNIT_SERVICE_API_GET_UNIT_BY_ID() {
+        return UNIT_SERVICE_API_GET_UNIT_BY_ID;
     }
 
     public String getUNIT_SERVICE_API_REQUEST_GLOBAL_STATUS() {
