@@ -40,3 +40,31 @@ RequestBody: Message object - the service is agnostic of the contents
 #### Output:
 Acknowledgement Http response (202)
 
+
+### GET All Units:
+
+Returns All the Units from the database
+
+#### Related environment variables:
+- ${API_GATEWAY_API_GET_ALL_UNITS}
+
+#### Input:
+Takes no input
+
+#### Output:
+A list of Unit objects
+
+### GET Unit By ID:
+
+Returns the requested Unit
+
+#### Related environment variables:
+- ${API_GATEWAY_API_GET_UNIT_BY_ID}
+
+#### Input:
+RequestParam
+- **unitID**: String - the unique ID of the unit
+
+#### Output:
+A Unit object or 404 Not Found
+
