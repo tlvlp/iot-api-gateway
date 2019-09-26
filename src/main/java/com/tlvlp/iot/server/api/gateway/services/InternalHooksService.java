@@ -5,8 +5,10 @@ import com.jayway.jsonpath.JsonPath;
 import com.tlvlp.iot.server.api.gateway.config.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,20 +26,25 @@ public class InternalHooksService {
     }
 
     public void handleIncomingMQTTMessage(Object message) {
-        DocumentContext processedMessage = JsonPath.parse(forwardMessageToUnitService(message));
-        var messageType = processedMessage.read("$.type", String.class);
-        log.info(String.format("Handling incoming MQTT message of type: %s", messageType));
-        switch (messageType) {
-            case "error":
-            case "inactive":
-                Object unit = processedMessage.read("$.object");
-                notifySubscribers(unit);
-                break;
-            case "status":
-                List unitModules = processedMessage.read("$.object.modules");
-                forwardUnitModuleUpdatesToReporting(unitModules);
-                notifySubscribers(processedMessage.read("$.object"));
-                break;
+        try {
+            DocumentContext processedMessage = JsonPath.parse(forwardMessageToUnitService(message));
+            var messageType = processedMessage.read("$.type", String.class);
+            log.info(String.format("Handling incoming MQTT message of type: %s", messageType));
+            switch (messageType) {
+                case "error":
+                case "inactive":
+                    Object unit = processedMessage.read("$.object");
+                    notifySubscribers(unit);
+                    break;
+                case "status":
+                    List unitModules = processedMessage.read("$.object.modules");
+                    forwardUnitModuleUpdatesToReporting(unitModules);
+                    notifySubscribers(processedMessage.read("$.object"));
+                    break;
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    String.format("Cannot process incoming MQTT message: %s", e.getMessage()));
         }
     }
 
