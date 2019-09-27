@@ -94,7 +94,7 @@ public class GatewayService {
                             properties.getUNIT_SERVICE_API_REQUEST_GLOBAL_STATUS()),
                     String.class);
             if (statusRequestMessage == null) {
-                throw new IllegalStateException("Unable to get status request message from Unit service.");
+                throw new NoValueRetrievedFromServiceException("Unable to get status request message from Unit service.");
             }
             return restTemplate.postForEntity(
                     String.format("http://%s:%s%s",
@@ -119,7 +119,7 @@ public class GatewayService {
                     updatedModule,
                     String.class);
             if (moduleControlMessage == null) {
-                throw new IllegalStateException("Unable to get module control message from Unit service.");
+                throw new NoValueRetrievedFromServiceException("Unable to get module control message from Unit service.");
             }
             return restTemplate.postForEntity(
                     String.format("http://%s:%s%s",
@@ -146,7 +146,7 @@ public class GatewayService {
                     scheduledEvent,
                     String.class);
             if (eventID == null) {
-                throw new IllegalStateException("Unable to create event at Scheduler service.");
+                throw new NoValueRetrievedFromServiceException("Unable to create event at Scheduler service.");
             }
             return restTemplate.postForEntity(
                     String.format("http://%s:%s%s",
@@ -174,7 +174,7 @@ public class GatewayService {
                     scheduledEvent,
                     String.class);
             if (eventID == null) {
-                throw new IllegalStateException("Unable to delete event at Scheduler service.");
+                throw new NoValueRetrievedFromServiceException("Unable to delete event at Scheduler service.");
             }
             return restTemplate.postForEntity(
                     String.format("http://%s:%s%s",
@@ -209,4 +209,5 @@ public class GatewayService {
                     String.format("Cannot generate Reports for Unit: %s", e.getMessage()));
         }
     }
+
 }
