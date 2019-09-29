@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 @RestController
+@CrossOrigin
 public class GatewayAPI {
 
     private GatewayService gatewayService;
