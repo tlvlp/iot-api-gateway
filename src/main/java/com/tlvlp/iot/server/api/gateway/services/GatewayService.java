@@ -142,7 +142,7 @@ public class GatewayService {
                     String.format("http://%s:%s%s",
                             properties.getSCHEDULER_SERVICE_NAME(),
                             properties.getSCHEDULER_SERVICE_PORT(),
-                            properties.getSCHEDULER_SERVICE_API_POST_EVENT()),
+                            properties.getSCHEDULER_SERVICE_API_POST_MQTT_MESSAGE_SEND_EVENT()),
                     scheduledEvent,
                     String.class);
             if (eventID == null) {
