@@ -19,6 +19,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findById(username)
                 .map(SecurityUserDetails::new)
-                .orElseThrow(() ->new UsernameNotFoundException("User not found in the database: " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found in the database: " + username));
     }
+
 }

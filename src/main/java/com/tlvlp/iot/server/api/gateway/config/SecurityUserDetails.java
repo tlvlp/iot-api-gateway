@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class SecurityUserDetails implements UserDetails {
 
-    private User user;
+    private final User user;
 
     public SecurityUserDetails(User user) {
         this.user = user;
@@ -21,6 +21,7 @@ public class SecurityUserDetails implements UserDetails {
         return user.getRoles()
                 .stream()
                 .map(Enum::toString)
+                .map(role -> "ROLE_" + role)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
