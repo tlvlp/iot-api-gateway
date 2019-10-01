@@ -6,6 +6,7 @@ import com.tlvlp.iot.server.api.gateway.config.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,13 +15,13 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class InternalHooksService {
+public class BackendHooksService {
 
-    private static final Logger log = LoggerFactory.getLogger(InternalHooksService.class);
+    private static final Logger log = LoggerFactory.getLogger(BackendHooksService.class);
     private Properties properties;
     private RestTemplate restTemplate;
 
-    public InternalHooksService(Properties properties, RestTemplate restTemplate) {
+    public BackendHooksService(Properties properties, RestTemplate restTemplate) {
         this.properties = properties;
         this.restTemplate = restTemplate;
     }
@@ -29,7 +30,7 @@ public class InternalHooksService {
         try {
             DocumentContext processedMessage = JsonPath.parse(forwardMessageToUnitService(message));
             var messageType = processedMessage.read("$.type", String.class);
-            log.info(String.format("Handling incoming MQTT message of type: %s", messageType));
+            log.debug(String.format("Handling incoming MQTT message of type: %s", messageType));
             switch (messageType) {
                 case "error":
                 case "inactive":
@@ -70,8 +71,22 @@ public class InternalHooksService {
         );
     }
 
-    private void notifySubscribers(Object unitLog) {
+    private void notifySubscribers(Object updatedUnit) {
         //TODO Implement subscriber notification
     }
 
+    public void handleOutgoingMQTTMessage(Object message) {
+        try {
+            log.debug("Forwarding outgoing MQTT message");
+            ResponseEntity response = restTemplate.postForEntity(
+                    String.format("http://%s:%s%s",
+                            properties.getMQTT_CLIENT_SERVICE_NAME(),
+                            properties.getMQTT_CLIENT_SERVICE_PORT(),
+                            properties.getMQTT_CLIENT_API_OUTGOING_MESSAGE()),
+                    message,
+                    String.class);
+        } catch (Exception e) {
+            log.error("Cannot forward outgoing MQTT message: " + e.getMessage());
+        }
+    }
 }
