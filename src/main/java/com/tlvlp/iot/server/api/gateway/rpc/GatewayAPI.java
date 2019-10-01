@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -72,7 +71,7 @@ public class GatewayAPI {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeFrom,
             @RequestParam
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeTo,
-            @RequestParam Set<ChronoUnit> requestedScopes) {
+            @RequestParam Set<String> requestedScopes) {
         return gatewayService.getReportsForUnit(unitID, moduleID, timeFrom, timeTo, requestedScopes);
     }
 

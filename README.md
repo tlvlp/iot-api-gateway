@@ -212,7 +212,7 @@ RequestParams:
 - **moduleID**: String - module ID
 - **timeFrom**: LocalDateTime - The start date and time of the requested report interval (inclusive)
 - **timeTo**: LocalDateTime - The end date and time of the requested report interval (exclusive)
-- **requestedScopes**: Set of ChronoUnits - A list of requested scopes to be included in the report:
+- **requestedScopes**: Set of ChronoUnits as Strings - A list of requested scopes to be included in the report:
     - **MINUTES**: All the raw values from the module within the given interval 
     - **HOURS**: Hourly averages from the module within the given interval 
     - **DAYS**: Daily averages from the module within the given interval 
@@ -220,8 +220,8 @@ RequestParams:
     - **YEARS**: Yearly averages from the module within the given interval 
     
 #### Output:
-A map where each key is a ChronoUnit denoting the scope which the values belong to
-and each value is a TreeMap ordered by date containing periods(scope specific!) and related averages in a Dobule format
+A map where each key is a ChronoUnit in a String form denoting the scope which the values belong to
+and each value is a TreeMap ordered by date containing periods(scope specific!) and related averages in a Double format
 
 ```
 {

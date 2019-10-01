@@ -12,7 +12,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -191,7 +190,7 @@ public class GatewayService {
     }
 
     public ResponseEntity getReportsForUnit(String unitID, String moduleID, LocalDateTime timeFrom,
-                                            LocalDateTime timeTo, Set<ChronoUnit> requestedScopes){
+                                            LocalDateTime timeTo, Set<String> requestedScopes){
         try {
             return restTemplate.getForEntity(
                     String.format("http://%s:%s%s?unitID=%s&moduleID=%s&timeFrom=%s&timeTo=%s&requestedScopes=%s",
@@ -202,7 +201,7 @@ public class GatewayService {
                             moduleID,
                             timeFrom,
                             timeTo,
-                            requestedScopes),
+                            String.join(",", requestedScopes)),
                     String.class);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
