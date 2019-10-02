@@ -8,6 +8,7 @@ plugins {
 group = 'com.tlvlp'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+
 ext {
 	mockitoVersion = "3.+"
 	projectName = 'iot-api-gateway'
