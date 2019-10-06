@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .and()
                 .authorizeRequests()
-                    .antMatchers("/users/**").hasRole(ADMIN.toString())
+                    .antMatchers("/admin/**").hasRole(ADMIN.toString())
                     .antMatchers("/backend/**").hasRole(BACKEND.toString())
                     .antMatchers("/**").hasRole(USER.toString())
                 .and()

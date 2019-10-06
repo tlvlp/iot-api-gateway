@@ -47,7 +47,7 @@ public class GatewayService {
                 Map.class);
     }
 
-    public Map<String, Object> getUnitByIdWithSchedulesAndReports(
+    public Map<String, Object> getUnitByIdWithSchedulesAndLogs(
             String unitID, LocalDateTime timeFrom, LocalDateTime timeTo) {
         Map unit = getUnitById(unitID);
         List eventIDList;

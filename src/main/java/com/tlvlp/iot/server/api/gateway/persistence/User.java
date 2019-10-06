@@ -15,7 +15,7 @@ public class User {
 
     @Id
     @NotBlank
-    private String username;
+    private String userID;
     @NotBlank
     private String firstName;
     @NotBlank
@@ -33,7 +33,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
+                "userID='" + userID + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", password='" + password + '\'' +
@@ -48,20 +48,20 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(username, user.username);
+        return Objects.equals(userID, user.userID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username);
+        return Objects.hash(userID);
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserID() {
+        return userID;
     }
 
-    public User setUsername(String username) {
-        this.username = username;
+    public User setUserID(String userID) {
+        this.userID = userID;
         return this;
     }
 

@@ -32,14 +32,14 @@ public class GatewayAPI {
     }
 
     @GetMapping("${API_GATEWAY_API_GET_UNIT_BY_ID_WITH_SCHEDULES_AND_LOGS}")
-    public ResponseEntity<Map<String, Object>> getUnitByIdWithSchedulesAndReports(
+    public ResponseEntity<Map<String, Object>> getUnitByIdWithSchedulesAndLogs(
             @RequestParam String unitID,
             @RequestParam
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeFrom,
             @RequestParam
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeTo) {
         return new ResponseEntity<>(
-                gatewayService.getUnitByIdWithSchedulesAndReports(unitID, timeFrom, timeTo),
+                gatewayService.getUnitByIdWithSchedulesAndLogs(unitID, timeFrom, timeTo),
                 HttpStatus.OK);
     }
 
