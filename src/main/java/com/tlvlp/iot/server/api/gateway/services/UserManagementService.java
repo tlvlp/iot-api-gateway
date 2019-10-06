@@ -29,6 +29,8 @@ public class UserManagementService {
     }
 
     public void saveUser(User user) {
+        var passPlainText = user.getPassword();
+        user.setPassword(passwordEncoder.encode(passPlainText));
         userRepository.save(user);
     }
 
@@ -40,6 +42,7 @@ public class UserManagementService {
             throws NoSuchElementException, UserAuthenticationFailedException {
         User user = userRepository.findById(userID).orElseThrow();
         if (passwordEncoder.matches(password, user.getPassword())) {
+            user.setPassword("REMOVED");
             return user;
         } else {
             throw new UserAuthenticationFailedException("Password mismatch");

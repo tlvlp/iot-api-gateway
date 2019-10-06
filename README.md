@@ -237,3 +237,110 @@ and each value is a TreeMap ordered by date containing periods(scope specific!) 
     ]
 }
 ```
+
+### GET User by ID:
+Returns a User by ID or 404 Not Found
+
+#### Related environment variables:
+- ${API_GATEWAY_API_GET_ALL_USERS}
+
+#### Input:
+RequestParams:
+- **userID**: String - ID of the requestedUser
+
+#### Output:
+User by ID or 404 Not Found
+
+
+### GET All Users:
+Returns all Users
+
+#### Related environment variables:
+- ${API_GATEWAY_API_GET_ALL_USERS}
+
+#### Input:
+Takes no parameters
+
+#### Output:
+List of User objects
+
+
+### POST Save user:
+Saves User
+
+#### Related environment variables:
+- ${API_GATEWAY_API_SAVE_USER}
+
+#### Input:
+RequestBody:
+- **userID**: String - ID of the requestedUser
+- **firstName**: String - first name
+- **lastName**: String - last name
+- **password**: String - User password
+- **email**: String - email
+- **active**: Boolean - true/false to flage active/inactive users
+- **roles**: Set<Role> - Set of Roles that can be:
+    - **ADMIN**: Administrative access
+    - **USER**: Regual access to the endpoints
+    - **BACKEND**: Access for other back end services
+
+```
+{
+    "userID": "testuser",
+    "firstName": "Test",
+    "lastName": "User",
+    "password": "testpass",
+    "email": "none@none.com",
+    "roles": [
+        "USER"
+    ],
+    "active": true
+}
+```
+
+#### Output:
+2xxx Acknowledgement
+
+
+### POST Delete user:
+Deletes User
+
+#### Related environment variables:
+- ${API_GATEWAY_API_DELETE_USER}
+
+#### Input:
+RequestBody:
+- **userID**: String - ID of the requestedUser
+
+#### Output:
+2xxx Acknowledgement
+
+
+
+### GET Authenticate User:
+Authenticates the user
+
+#### Related environment variables:
+- ${API_GATEWAY_API_AUTHENTICATE_USER}
+
+#### Input:
+RequestParams:
+- **userID**: String - ID of the requestedUser
+- **password**: String - User password
+
+#### Output:
+The User object with the password removed
+
+```
+{
+    "userID": "testuser",
+    "firstName": "Test",
+    "lastName": "User",
+    "password": "REMOVED",
+    "email": "none@none.com",
+    "roles": [
+        "USER"
+    ],
+    "active": true
+}
+```
