@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class UserManagementService {
@@ -21,11 +20,9 @@ public class UserManagementService {
     }
 
     public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    public Optional<User> getUserByID(String userID) {
-        return userRepository.findById(userID);
+        var users = userRepository.findAll();
+        users.forEach(user -> user.setPassword(""));
+        return users;
     }
 
     public void saveUser(User user) {
@@ -38,13 +35,10 @@ public class UserManagementService {
         userRepository.delete(user);
     }
 
-    public User authenticateUser(String userID, String password)
+    public void authenticateUser(String userID, String password)
             throws NoSuchElementException, UserAuthenticationFailedException {
         User user = userRepository.findById(userID).orElseThrow();
-        if (passwordEncoder.matches(password, user.getPassword())) {
-            user.setPassword("REMOVED");
-            return user;
-        } else {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new UserAuthenticationFailedException("Password mismatch");
         }
     }

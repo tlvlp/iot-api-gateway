@@ -48,8 +48,11 @@ public class GatewayService {
     }
 
     public Map<String, Object> getUnitByIdWithSchedulesAndLogs(
-            String unitID, LocalDateTime timeFrom, LocalDateTime timeTo) {
+            String unitID, LocalDateTime timeFrom, LocalDateTime timeTo) throws NoContentRetrievedFromServiceException {
         Map unit = getUnitById(unitID);
+        if (unit == null) {
+            throw new NoContentRetrievedFromServiceException("Unit not found");
+        }
         List eventIDList;
         try {
             eventIDList = JsonPath.parse(unit).read("$.scheduledEvents", List.class);
@@ -93,7 +96,7 @@ public class GatewayService {
                             properties.getUNIT_SERVICE_API_REQUEST_GLOBAL_STATUS()),
                     String.class);
             if (statusRequestMessage == null) {
-                throw new NoValueRetrievedFromServiceException("Unable to get status request message from Unit service.");
+                throw new NoContentRetrievedFromServiceException("Unable to get status request message from Unit service.");
             }
             return restTemplate.postForEntity(
                     String.format("http://%s:%s%s",
@@ -118,7 +121,7 @@ public class GatewayService {
                     updatedModule,
                     String.class);
             if (moduleControlMessage == null) {
-                throw new NoValueRetrievedFromServiceException("Unable to get module control message from Unit service.");
+                throw new NoContentRetrievedFromServiceException("Unable to get module control message from Unit service.");
             }
             return restTemplate.postForEntity(
                     String.format("http://%s:%s%s",
@@ -145,7 +148,7 @@ public class GatewayService {
                     scheduledEvent,
                     String.class);
             if (eventID == null) {
-                throw new NoValueRetrievedFromServiceException("Unable to create event at Scheduler service.");
+                throw new NoContentRetrievedFromServiceException("Unable to create event at Scheduler service.");
             }
             return restTemplate.postForEntity(
                     String.format("http://%s:%s%s",
@@ -173,7 +176,7 @@ public class GatewayService {
                     scheduledEvent,
                     String.class);
             if (eventID == null) {
-                throw new NoValueRetrievedFromServiceException("Unable to delete event at Scheduler service.");
+                throw new NoContentRetrievedFromServiceException("Unable to delete event at Scheduler service.");
             }
             return restTemplate.postForEntity(
                     String.format("http://%s:%s%s",

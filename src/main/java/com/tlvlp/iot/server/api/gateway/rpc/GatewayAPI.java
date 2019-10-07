@@ -1,10 +1,12 @@
 package com.tlvlp.iot.server.api.gateway.rpc;
 
 import com.tlvlp.iot.server.api.gateway.services.GatewayService;
+import com.tlvlp.iot.server.api.gateway.services.NoContentRetrievedFromServiceException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,7 +30,11 @@ public class GatewayAPI {
 
     @GetMapping("${API_GATEWAY_API_GET_UNIT_BY_ID}")
     public ResponseEntity<Object> getUnitById(@RequestParam String unitID) {
-        return new ResponseEntity<>(gatewayService.getUnitById(unitID), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(gatewayService.getUnitById(unitID), HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
     @GetMapping("${API_GATEWAY_API_GET_UNIT_BY_ID_WITH_SCHEDULES_AND_LOGS}")
@@ -38,9 +44,14 @@ public class GatewayAPI {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeFrom,
             @RequestParam
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime timeTo) {
-        return new ResponseEntity<>(
-                gatewayService.getUnitByIdWithSchedulesAndLogs(unitID, timeFrom, timeTo),
-                HttpStatus.OK);
+
+        try {
+            return new ResponseEntity<>(
+                    gatewayService.getUnitByIdWithSchedulesAndLogs(unitID, timeFrom, timeTo), HttpStatus.OK);
+        } catch (NoContentRetrievedFromServiceException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+
     }
 
     @PostMapping("${API_GATEWAY_API_REQUEST_GLOBAL_UNIT_STATUS}")

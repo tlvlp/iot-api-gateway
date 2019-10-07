@@ -27,13 +27,6 @@ public class UserManagementAPI {
         return new ResponseEntity<>(userManagementService.getAllUsers(), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("${API_GATEWAY_API_GET_USER_BY_ID}")
-    public ResponseEntity<User> getUserByID(@RequestParam String  userID) {
-        User user = userManagementService.getUserByID(userID)
-                .orElseThrow(() ->new ResponseStatusException(HttpStatus.NOT_FOUND, "User ID not found: " + userID));
-        return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
-    }
-
     @PostMapping("${API_GATEWAY_API_SAVE_USER}")
     public ResponseEntity saveUser(@RequestBody @Valid User user) {
         userManagementService.saveUser(user);
@@ -47,10 +40,11 @@ public class UserManagementAPI {
     }
 
     @GetMapping("${API_GATEWAY_API_AUTHENTICATE_USER}")
-    public ResponseEntity<User> getRoles(@RequestParam String userID,
-                                         @RequestParam String password) {
+    public ResponseEntity getRoles(@RequestParam String userID,
+                                   @RequestParam String password) {
         try {
-            return new ResponseEntity<>(userManagementService.authenticateUser(userID, password), HttpStatus.OK);
+            userManagementService.authenticateUser(userID, password);
+            return new ResponseEntity(HttpStatus.ACCEPTED);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User ID not found");
         } catch (UserAuthenticationFailedException e) {
@@ -60,7 +54,11 @@ public class UserManagementAPI {
 
     @GetMapping("${API_GATEWAY_API_GET_ROLES}")
     public ResponseEntity<Role[]> getRoles() {
-        return new ResponseEntity<>(Role.values(), HttpStatus.OK);
+        var roles = Role.values();
+        if (roles.length == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to retrieve Roles");
+        }
+        return new ResponseEntity<>(roles, HttpStatus.OK);
     }
 
 
