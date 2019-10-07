@@ -1,7 +1,7 @@
 # IoT Server API Gateway
 
 ## Service
-Part of the tlvlp IoT project's server side microservices.
+Part of the [tlvlp IoT project](https://github.com/tlvlp/iot-project-summary)'s server side microservices.
 
 This Dockerized SpringBoot-based service is responsible providing an API gateway to the other microservices:
 - Expose API endpoints for higher level interaction with the services
