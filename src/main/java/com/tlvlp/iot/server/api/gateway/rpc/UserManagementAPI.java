@@ -3,6 +3,7 @@ package com.tlvlp.iot.server.api.gateway.rpc;
 import com.tlvlp.iot.server.api.gateway.persistence.Role;
 import com.tlvlp.iot.server.api.gateway.persistence.User;
 import com.tlvlp.iot.server.api.gateway.services.UserAuthenticationFailedException;
+import com.tlvlp.iot.server.api.gateway.services.UserManagementException;
 import com.tlvlp.iot.server.api.gateway.services.UserManagementService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,13 @@ public class UserManagementAPI {
 
     @PostMapping("${API_GATEWAY_API_SAVE_USER}")
     public ResponseEntity saveUser(@RequestBody @Valid User user) {
-        userManagementService.saveUser(user);
-        return new ResponseEntity(HttpStatus.ACCEPTED);
+        try {
+            userManagementService.saveUser(user);
+            return new ResponseEntity(HttpStatus.ACCEPTED);
+        } catch (UserManagementException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+
     }
 
     @PostMapping("${API_GATEWAY_API_DELETE_USER}")
