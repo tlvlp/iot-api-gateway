@@ -26,9 +26,15 @@ public class UserManagementService {
     }
 
     public void saveUser(User user) {
-        var passPlainText = user.getPassword();
-        user.setPassword(passwordEncoder.encode(passPlainText));
+        if (isValidPassword(user.getPassword())) {
+            var updatedPass = user.getPassword();
+            user.setPassword(passwordEncoder.encode(updatedPass));
+        }
         userRepository.save(user);
+    }
+
+    private boolean isValidPassword(String password) {
+        return !password.isEmpty() && !password.isBlank() && !password.contains(" ");
     }
 
     public void deleteUser(User user) {
