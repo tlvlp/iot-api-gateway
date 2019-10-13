@@ -8,6 +8,11 @@ public class Properties {
 
     // The service uses environment variables from the Docker container.
 
+    // Ports
+    @Value("${API_GATEWAY_PORT}")
+    private int API_GATEWAY_PORT;
+
+
     // MQTT Client
 
     @Value("${MQTT_CLIENT_SERVICE_NAME}")
@@ -172,6 +177,10 @@ public class Properties {
 
     public String getREPORTING_SERVICE_API_POST_VALUES() {
         return REPORTING_SERVICE_API_POST_VALUES;
+    }
+
+    public int getAPI_GATEWAY_PORT() {
+        return API_GATEWAY_PORT;
     }
 
 }

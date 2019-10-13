@@ -20,7 +20,7 @@ Sample Request:
 ```bash
 curl -X GET \
   -u username:password \
-  http://0.0.0.0:8500/units \
+  https://0.0.0.0:8544/units \
   -H 'Content-Type: application/json'
 ```
 
@@ -65,7 +65,7 @@ Sample Request:
 ```bash
 curl -X GET \
   -u username:password \
-  'http://0.0.0.0:8500/units/id?unitID=tlvlp.iot.BazsalikON-soil' \
+  https://0.0.0.0:8544/units/id?unitID=tlvlp.iot.BazsalikON-soil \
   -H 'Content-Type: application/json'
 
 ```
@@ -111,7 +111,7 @@ Sample Request:
 ```bash
 curl -X POST \
   -u username:password \
-  http://0.0.0.0:8500/units/request \
+  https://0.0.0.0:8544/units/request \
   -H 'Content-Type: application/json' 
 ```
 
@@ -138,7 +138,7 @@ Sample Request:
 ```bash
 curl -X POST \
   -u username:password \
-  http://0.0.0.0:8500/units/modules/control \
+  https://0.0.0.0:8544/units/modules/control \
   -H 'Content-Type: application/json' \
   -d '{
     "moduleID": "relay|growlight",
@@ -169,7 +169,7 @@ Sample Request:
 ```bash
 curl -X POST \
   -u username:password \
-  http://0.0.0.0:8500/units/events/add \
+  https://0.0.0.0:8544/units/events/add \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
   -d '{
@@ -228,7 +228,7 @@ Sample Request:
 ```bash
 curl -X POST \
   -u username:password \
-  http://0.0.0.0:8500/units/events/delete \
+  https://0.0.0.0:8544/units/events/delete \
   -H 'Content-Type: application/json' \
   -d '{
 	"unitID": "tlvlp.iot.BazsalikON-soil",
@@ -278,10 +278,10 @@ Sample Request:
 ```bash
 curl -X GET \
   -u username:password \
-  'http://0.0.0.0:8500/units/collected\
+  https://0.0.0.0:8544/units/collected\
   ?unitID=tlvlp.iot.BazsalikON-soil\
   &timeFrom=2019-09-21T00:24:27.471\
-  &timeTo=2019-10-26T00:24:27.471' \
+  &timeTo=2019-10-26T00:24:27.471 \
   -H 'Content-Type: application/json'
 ```
 
@@ -364,12 +364,12 @@ Note:
  ```bash
 curl -X GET \
   -u username:password \
-  'http://0.0.0.0:8500/units/modules/report\
+  https://0.0.0.0:8544/units/modules/report\
   ?unitID=tlvlp.iot.BazsalikON-soil\
   &moduleID=gl5528|lightPercent\
   &timeFrom=2019-09-21T00:24:27.471\
   &timeTo=2019-10-25T00:24:27.471\
-  &requestedScopes=MINUTES,HOURS,DAYS,MONTHS,YEARS' \
+  &requestedScopes=MINUTES,HOURS,DAYS,MONTHS,YEARS \
   -H 'Content-Type: application/json'
  ```
  

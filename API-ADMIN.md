@@ -1,4 +1,4 @@
-# IoT Server API Gateway - Internal API
+# IoT Server API Gateway - Admin API
  
 The following endpoints are for administrative purposes and accessible with the ADMIN role.
 Actual API endpoints are inherited from the project's [deployment repository](https://github.com/tlvlp/iot-server-deployment) via environment variables.
@@ -20,7 +20,7 @@ Sample Request:
 ```bash
 curl -X GET \
   -u username:password \
-  http://0.0.0.0:8500/admin/users/all \
+  https://0.0.0.0:8544/admin/users/all \
   -H 'Content-Type: application/json'
 ```
 
@@ -81,7 +81,7 @@ Sample request:
 ```bash
 curl -X POST \
   -u username:password \
-  http://0.0.0.0:8500/admin/users/save \
+  https://0.0.0.0:8544/admin/users/save \
   -H 'Content-Type: application/json' \
   -H 'Postman-Token: a7e23ecf-06d3-4330-8c87-68c482a9cbea' \
   -H 'cache-control: no-cache' \
@@ -115,7 +115,7 @@ Sample request:
 ```bash
 curl -X POST \
   -u username:password \
-  http://0.0.0.0:8500/admin/users/delete \
+  https://0.0.0.0:8544/admin/users/delete \
   -H 'Content-Type: application/json' \
   -d '{
     "userID": "testuser"
@@ -140,9 +140,9 @@ Sample request:
 ```bash
 curl -X GET \
   -u username:password \
-  'http://0.0.0.0:8500/admin/users/authenticate\
+  https://0.0.0.0:8544/admin/users/authenticate\
   ?userID=sonew\
-  &password=testpass' \
+  &password=testpass \
   -H 'Content-Type: application/json' 
 ```
 
@@ -163,7 +163,7 @@ Sample request:
 ```bash
 curl -X GET \
   -u username:password \
-  http://0.0.0.0:8500/admin/roles \
+  https://0.0.0.0:8544/admin/roles \
   -H 'Content-Type: application/json' 
 ```
 

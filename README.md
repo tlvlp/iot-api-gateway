@@ -27,6 +27,6 @@ The following roles are defined:
 ## Server-side API
 The endpoint details can be found in the below documents:
 
-- [External API](API-EXTERNAL.md): The core API served by this gateway. Accessible with the USER role.
-- [Internal API](API-INTERNAL.md): For backend services with the BACKEND role.
-- [Admin API](API-ADMIN.md): For administrative purposes and accessible with the ADMIN role.
+- [External API](API-EXTERNAL.md): The core API served by this gateway. Accessible with the USER role and secured with TLS.
+- [Internal API](API-INTERNAL.md): For backend services with the BACKEND role and uses ordinary HTTP protocol.
+- [Admin API](API-ADMIN.md): For administrative purposes and accessible with the ADMIN role and secured with TLS.

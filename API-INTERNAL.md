@@ -41,3 +41,33 @@ curl -X POST \
 		"somo|soilMoisturePercent": "80"}
 }'
 ```
+##  Outgoing messages:
+| | |
+| :--- | :--- |
+| URL | ${API_GATEWAY_API_OUTGOING_MQTT_MESSAGE} |
+| Method | POST |
+| Content-Type | application/json |
+| URL Parameters | None |
+| Request Body | Message object (see sample below) |
+| Success Response | Code: 202 ACCEPTED Contents: None |
+| | Contents: None |
+| Error Response | No specific error |
+| Authorization | BACKEND |
+
+Notes: 
+1. Receives a message object from a backend service
+2. Sends the message to the MQTT Client service to be forwarded to the Units
+
+Sample Request:
+```bash
+curl -X POST \
+  -u username:password \
+  http://0.0.0.0:8500/backend/mqtt/outgoing \
+  -H 'Content-Type: application/json' \
+  -d '{
+	"topic": "/unit_control_topic_comes_here",
+	"payload": { "relay|growlight": 0 }
+}'
+```
+
+
