@@ -9,7 +9,7 @@ This Dockerized SpringBoot-based service is responsible providing an API gateway
 - Provide user profiles based authentication and authorization for the endpoints
 
 ## Building and publishing JAR + Docker image
-This project is using the using the [Palantir Docker Gradle plugin](https://github.com/palantir/gradle-docker).
+This project is using the [Palantir Docker Gradle plugin](https://github.com/palantir/gradle-docker).
 All configuration can be found in the [Gradle build file](build.gradle) file 
 and is recommended to be run with the docker/dockerTagsPush task.
 
@@ -18,7 +18,7 @@ and is recommended to be run with the docker/dockerTagsPush task.
 - For settings and deployment details see the project's [deployment repository](https://github.com/tlvlp/iot-server-deployment)
 
 ## Security
-The endpoint is secured with Spring Boot Security using Basic authorization.
+The endpoint is secured with Spring Boot Security using Basic auth.
 The following roles are defined:
 - **ADMIN**: Administrative access
 - **USER**: Regular access to the endpoints
