@@ -27,30 +27,28 @@ public class UserManagementService {
     }
 
     public void saveUser(User user) throws UserManagementException {
-        var oldUser = userRepository.findById(user.getUserID());
-       if (isPasswordNotValidForNewUser(user, oldUser)) {
+       var oldUser = userRepository.findById(user.getUserID());
+       if (isNewUserWithoutPassword(user, oldUser)) {
            throw new UserManagementException("New user must have a valid password");
-
-       } else if (isPasswordValidForUpdate(user, oldUser)) {
-            var updatedPass = user.getPassword();
-            user.setPassword(passwordEncoder.encode(updatedPass));
-
-       } else if (isPasswordUpdateSkipped(user, oldUser)) {
-            var oldPass = oldUser.get().getPassword();
-           user.setPassword(passwordEncoder.encode(oldPass));
+       } else if (isOldUserPasswordUpdateSkipped(user, oldUser)) {
+           var oldPass = oldUser.get().getPassword();
+           user.setPassword(oldPass);
+       } else if (containsValidPassword(user)) {
+           var updatedPass = passwordEncoder.encode(user.getPassword());
+           user.setPassword(updatedPass);
        }
         userRepository.save(user);
     }
 
-    private boolean isPasswordNotValidForNewUser(User newUser, Optional<User> oldUser) {
+    private boolean isNewUserWithoutPassword(User newUser, Optional<User> oldUser) {
         return !isPasswordValid(newUser.getPassword()) && oldUser.isEmpty();
     }
 
-    private boolean isPasswordValidForUpdate(User newUser, Optional<User> oldUser) {
-        return !isPasswordValid(newUser.getPassword()) && oldUser.isPresent();
+    private boolean containsValidPassword(User newUser) {
+        return isPasswordValid(newUser.getPassword());
     }
 
-    private boolean isPasswordUpdateSkipped(User newUser, Optional<User> oldUser) {
+    private boolean isOldUserPasswordUpdateSkipped(User newUser, Optional<User> oldUser) {
         return newUser.getPassword().equals("") && oldUser.isPresent();
     }
 
