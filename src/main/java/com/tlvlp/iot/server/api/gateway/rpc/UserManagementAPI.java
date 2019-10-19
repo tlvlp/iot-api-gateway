@@ -46,7 +46,7 @@ public class UserManagementAPI {
     }
 
     @GetMapping("${API_GATEWAY_API_AUTHENTICATE_USER}")
-    public ResponseEntity getRoles(@RequestParam String userID,
+    public ResponseEntity authenticateUser(@RequestParam String userID,
                                    @RequestParam String password) {
         try {
             userManagementService.authenticateUser(userID, password);
