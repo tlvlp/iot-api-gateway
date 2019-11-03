@@ -1,7 +1,7 @@
 package com.tlvlp.iot.server.api.gateway.rpc;
 
-import com.tlvlp.iot.server.api.gateway.persistence.Role;
-import com.tlvlp.iot.server.api.gateway.persistence.User;
+import com.tlvlp.iot.server.api.gateway.security.Role;
+import com.tlvlp.iot.server.api.gateway.security.User;
 import com.tlvlp.iot.server.api.gateway.services.UserAuthenticationFailedException;
 import com.tlvlp.iot.server.api.gateway.services.UserManagementException;
 import com.tlvlp.iot.server.api.gateway.services.UserManagementService;

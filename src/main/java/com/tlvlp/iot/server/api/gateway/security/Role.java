@@ -1,4 +1,4 @@
-package com.tlvlp.iot.server.api.gateway.persistence;
+package com.tlvlp.iot.server.api.gateway.security;
 
 public enum Role {
     ADMIN,

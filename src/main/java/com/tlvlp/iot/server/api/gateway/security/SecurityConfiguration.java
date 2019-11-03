@@ -1,4 +1,4 @@
-package com.tlvlp.iot.server.api.gateway.config;
+package com.tlvlp.iot.server.api.gateway.security;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.tlvlp.iot.server.api.gateway.persistence.Role.*;
+import static com.tlvlp.iot.server.api.gateway.security.Role.*;
 
 @Configuration
 @EnableConfigurationProperties

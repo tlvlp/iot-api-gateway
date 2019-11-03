@@ -1,4 +1,4 @@
-package com.tlvlp.iot.server.api.gateway.config;
+package com.tlvlp.iot.server.api.gateway.security;
 
 import com.tlvlp.iot.server.api.gateway.persistence.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;

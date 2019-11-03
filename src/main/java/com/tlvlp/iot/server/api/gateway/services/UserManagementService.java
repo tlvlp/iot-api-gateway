@@ -1,6 +1,6 @@
 package com.tlvlp.iot.server.api.gateway.services;
 
-import com.tlvlp.iot.server.api.gateway.persistence.User;
+import com.tlvlp.iot.server.api.gateway.security.User;
 import com.tlvlp.iot.server.api.gateway.persistence.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
