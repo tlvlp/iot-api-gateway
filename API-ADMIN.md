@@ -1,7 +1,43 @@
 # IoT Server API Gateway - Admin API
  
-The following endpoints are for administrative purposes and accessible with the ADMIN role.
+The following endpoints are for administrative purposes and most of them are accessible with the ADMIN role 
+save for the authentication that is accessible by any authenticated user.
 Actual API endpoints are inherited from the project's [deployment repository](https://github.com/tlvlp/iot-server-deployment) via environment variables.
+
+## Authenticate User:
+| | |
+| :--- | :--- |
+| URL | ${API_GATEWAY_API_AUTHENTICATE_USER} |
+| Method | GET |
+| Content-Type | application/json |
+| URL Parameters | userID: String - The User's login ID |
+| | password: String - The User's password |
+| Request Body | None |
+| Success Response | Code: 200 OK  |
+| | Contents: None |
+| Error Response | Code: 404 NOT FOUND |
+| Authorization | Any authenticated user! |
+
+Sample request:
+```bash
+curl -X POST \
+  -u username:password \
+  https://0.0.0.0:8544/users/auth
+```
+Sample output:
+```json
+{
+    "userID": "test_user",
+    "firstName": "Test",
+    "lastName": "User",
+    "password": "",
+    "email": "test.user@gmail.com",
+    "roles": [
+        "USER"
+    ],
+    "active": true
+}
+```
 
 ## Get All Users:
 | | |
@@ -20,7 +56,7 @@ Sample Request:
 ```bash
 curl -X GET \
   -u username:password \
-  https://0.0.0.0:8544/admin/users/all \
+  https://0.0.0.0:8544/users/admin/all \
   -H 'Content-Type: application/json'
 ```
 
@@ -81,7 +117,7 @@ Sample request:
 ```bash
 curl -X POST \
   -u username:password \
-  https://0.0.0.0:8544/admin/users/save \
+  https://0.0.0.0:8544/users/admin/save \
   -H 'Content-Type: application/json' \
   -H 'Postman-Token: a7e23ecf-06d3-4330-8c87-68c482a9cbea' \
   -H 'cache-control: no-cache' \
@@ -115,35 +151,11 @@ Sample request:
 ```bash
 curl -X POST \
   -u username:password \
-  https://0.0.0.0:8544/admin/users/delete \
+  https://0.0.0.0:8544/users/admin/delete \
   -H 'Content-Type: application/json' \
   -d '{
     "userID": "testuser"
 }'
-```
-
-## Authenticate User:
-| | |
-| :--- | :--- |
-| URL | ${API_GATEWAY_API_AUTHENTICATE_USER} |
-| Method | GET |
-| Content-Type | application/json |
-| URL Parameters | userID: String - The User's login ID |
-| | password: String - The User's password |
-| Request Body | None |
-| Success Response | Code: 200 OK  |
-| | Contents: None |
-| Error Response | Code: 404 NOT FOUND |
-| Authorization | ADMIN |
-
-Sample request:
-```bash
-curl -X GET \
-  -u username:password \
-  https://0.0.0.0:8544/admin/users/authenticate\
-  ?userID=sonew\
-  &password=testpass \
-  -H 'Content-Type: application/json' 
 ```
 
 ## Get Roles:
@@ -163,7 +175,7 @@ Sample request:
 ```bash
 curl -X GET \
   -u username:password \
-  https://0.0.0.0:8544/admin/roles \
+  https://0.0.0.0:8544/users/admin/roles \
   -H 'Content-Type: application/json' 
 ```
 
