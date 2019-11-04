@@ -1,7 +1,7 @@
 package com.tlvlp.iot.server.api.gateway.services;
 
-import com.tlvlp.iot.server.api.gateway.security.User;
 import com.tlvlp.iot.server.api.gateway.persistence.UserRepository;
+import com.tlvlp.iot.server.api.gateway.security.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -60,11 +60,9 @@ public class UserManagementService {
         userRepository.delete(user);
     }
 
-    public void authenticateUser(String userID, String password)
-            throws NoSuchElementException, UserAuthenticationFailedException {
+    public User getUserAfterAuthentication(String userID) throws NoSuchElementException {
         User user = userRepository.findById(userID).orElseThrow();
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new UserAuthenticationFailedException("Password mismatch");
-        }
+        user.setPassword("");
+        return user;
     }
 }

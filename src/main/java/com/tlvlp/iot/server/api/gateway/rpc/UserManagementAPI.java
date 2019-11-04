@@ -2,25 +2,39 @@ package com.tlvlp.iot.server.api.gateway.rpc;
 
 import com.tlvlp.iot.server.api.gateway.security.Role;
 import com.tlvlp.iot.server.api.gateway.security.User;
-import com.tlvlp.iot.server.api.gateway.services.UserAuthenticationFailedException;
 import com.tlvlp.iot.server.api.gateway.services.UserManagementException;
 import com.tlvlp.iot.server.api.gateway.services.UserManagementService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@RestController("/admin")
+@RestController
 public class UserManagementAPI {
 
     private UserManagementService userManagementService;
 
     public UserManagementAPI(UserManagementService userManagementService) {
         this.userManagementService = userManagementService;
+    }
+
+    @PostMapping("${API_GATEWAY_API_AUTHENTICATE_USER}")
+    public ResponseEntity<User> getUserAfterAuthentication(HttpServletRequest request) {
+        try {
+            var loggedInUserName = request.getUserPrincipal().getName();
+            var user = userManagementService.getUserAfterAuthentication(loggedInUserName);
+            return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User ID not found");
+        }
     }
 
     @GetMapping("${API_GATEWAY_API_GET_ALL_USERS}")
@@ -43,19 +57,6 @@ public class UserManagementAPI {
     public ResponseEntity deleteUser(@RequestBody User user) {
         userManagementService.deleteUser(user);
         return new ResponseEntity(HttpStatus.OK);
-    }
-
-    @GetMapping("${API_GATEWAY_API_AUTHENTICATE_USER}")
-    public ResponseEntity authenticateUser(@RequestParam String userID,
-                                   @RequestParam String password) {
-        try {
-            userManagementService.authenticateUser(userID, password);
-            return new ResponseEntity(HttpStatus.ACCEPTED);
-        } catch (NoSuchElementException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User ID not found");
-        } catch (UserAuthenticationFailedException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
     }
 
     @GetMapping("${API_GATEWAY_API_GET_ROLES}")
