@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.tlvlp'
-version = '1.0.1'
+version = '1.0.2'
 sourceCompatibility = '11'
 
 ext {
@@ -42,7 +42,7 @@ test {
 
 docker {
 	name "$dockerRepo/$projectName:$project.version"
-//	tag "$project.version", "$dockerRepo/$projectName:$project.version"
+	tag "$project.version", "$dockerRepo/$projectName:$project.version"
 	tag 'latest', "$dockerRepo/$projectName:latest"
 	dependsOn bootJar
 	files bootJar.outputs
