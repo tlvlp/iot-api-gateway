@@ -26,7 +26,7 @@ public class UserManagementAPI {
         this.userManagementService = userManagementService;
     }
 
-    @PostMapping("${API_GATEWAY_API_AUTHENTICATE_USER}")
+    @GetMapping("${API_GATEWAY_API_AUTHENTICATE_USER}")
     public ResponseEntity<User> getUserAfterAuthentication(HttpServletRequest request) {
         try {
             var loggedInUserName = request.getUserPrincipal().getName();
