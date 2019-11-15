@@ -39,11 +39,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/backend/**").hasRole(BACKEND.toString())
                     .antMatchers("/**").hasRole(USER.toString())
                 .and()
-                .requiresChannel()
-                    .antMatchers("/backend/**").requiresInsecure()
-                    .antMatchers("/users/**").requiresSecure()
-                    .antMatchers("/**").requiresSecure()
-                .and()
                 .httpBasic();
 
     }

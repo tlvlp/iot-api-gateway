@@ -21,6 +21,9 @@ import static org.springframework.core.env.StandardEnvironment.SYSTEM_ENVIRONMEN
 /**
  * Parses file based secrets and makes them available as new environment variables.
  * The main use-case is to parse Docker Swarm Secrets.
+ *
+ * Parsing will be skipped if the SPRING_ACTIVE_PROFILE is set to "dev"
+ *
  * <p>
  * 1) Looks for two types of environment variables as input:
  * Secrets Folder:
